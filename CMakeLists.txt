@@ -12,7 +12,7 @@ set(SRCS
 	${PROJ}/position.hpp
 )
 	
-a
+
 project(${PROJ})
 
 include_directories(${PROJ})
