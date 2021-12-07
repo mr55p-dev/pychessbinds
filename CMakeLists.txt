@@ -11,7 +11,6 @@ set(SRCS
 	${PROJ}/position.cpp
 	${PROJ}/position.hpp
 )
-	
 
 project(${PROJ})
 
