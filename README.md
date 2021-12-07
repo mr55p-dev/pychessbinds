@@ -1,4 +1,5 @@
 # PyChessBinds
+---
 
 Soon to be called libpychess. `C++` bindings for my own Python implementation of Chess.
 This will be implemented alongside the (currently private) Python application to enhance the speed of game generation.
