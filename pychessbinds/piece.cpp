@@ -15,6 +15,9 @@ Piece::Piece(
     projections(init_projections),
     distance(init_distance) {};
 
+bool Piece::operator< (const Piece& rhs) const
+{ return true; };
+
 
 Piece Piecedef::King(bool colour, Position starting_position)
 {

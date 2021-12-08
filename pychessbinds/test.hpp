@@ -28,7 +28,8 @@ enum Allowedtype
     AT_blocked,
     AT_checking_attack,
     AT_capture,
-    AT_disallowed
+    AT_disallowed,
+    AT_attacks
 };
 
 #endif /* test_hpp */

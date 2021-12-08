@@ -10,6 +10,8 @@ set(SRCS
 	${PROJ}/piece.hpp
 	${PROJ}/position.cpp
 	${PROJ}/position.hpp
+	${PROJ}/move_analyser.cpp
+	${PROJ}/move_analyser.hpp
 )
 
 project(${PROJ})
@@ -17,3 +19,4 @@ project(${PROJ})
 include_directories(${PROJ})
 
 add_executable(${PROJ} "${SRCS}") 
+set_property(TARGET ${PROJ} PROPERTY CXX_STANDARD 17)
