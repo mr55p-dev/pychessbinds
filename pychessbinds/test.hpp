@@ -4,23 +4,12 @@
 //
 //  Created by Ellis Lunnon on 04/12/2021.
 //
-
-#ifndef test_hpp
-#define test_hpp
+#pragma once
 
 #include <iostream>
 
 #define C_WHITE 1
 #define C_BLACK 0
-
-enum MoveType
-{
-    MT_passive,
-    MT_capture,
-    MT_attack,
-    MT_defend,
-    MT_pin
-};
 
 enum Allowedtype
 {
@@ -31,5 +20,3 @@ enum Allowedtype
     AT_disallowed,
     AT_attacks
 };
-
-#endif /* test_hpp */
