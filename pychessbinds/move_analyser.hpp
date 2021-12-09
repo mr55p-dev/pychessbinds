@@ -8,21 +8,29 @@
 
 #include <iostream>
 #include <optional>
-#include <functional>
 #include <vector>
 #include <map>
 
 #include "piece.hpp"
 #include "position.hpp"
-#include "test.hpp"
-#include "log.hpp"
-
 
 #define _BREAKIF(cond) if (cond) {break;};
+#define C_WHITE 1
+#define C_BLACK 0
+
+enum Allowedtype
+{
+    AT_empty,
+    AT_blocked,
+    AT_checking_attack,
+    AT_capture,
+    AT_disallowed,
+    AT_attacks
+};
 
 typedef std::vector<Piece> PieceVec;
 
-struct PieceMovesByCat
+struct Result
 {
     MoveSet passives;
     MoveSet captures;
@@ -38,14 +46,14 @@ public:
     MoveAnalyser(const PieceVec& pieces);
     
 public:
-    std::map<Piece, PieceMovesByCat> PsuedolegalMoves();
+    std::map<Piece, Result> PsuedolegalMoves(const bool colour);
     Allowedtype AllowedMove(const Position* landed_on, const Piece* piece);
     
 private:
     PieceVec m_pieces;
     MoveSet m_piece_locations;
-    PieceMovesByCat PiecePsuedolegalMoves(const Piece* piece);
-    void ProjectionPsuedolegalMoves(const Piece* piece, const Vec projection, PieceMovesByCat* piece_valid_moves);
+    Result PiecePsuedolegalMoves(const Piece* piece);
+    void ProjectionPsuedolegalMoves(const Piece* piece, const Vec projection, Result* piece_valid_moves);
     
     
 };

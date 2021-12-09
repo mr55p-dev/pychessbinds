@@ -12,7 +12,6 @@
 // Define the constructor
 MoveAnalyser::MoveAnalyser(const PieceVec& pieces) : m_pieces(pieces)
 {
-    
     for (auto piece : pieces)
     {
         m_piece_locations.push_back(piece.position);
@@ -21,14 +20,17 @@ MoveAnalyser::MoveAnalyser(const PieceVec& pieces) : m_pieces(pieces)
 
 
 // Get all the psuedolegal moves for each piece
-std::map<Piece, PieceMovesByCat> MoveAnalyser::PsuedolegalMoves()
+std::map<Piece, Result> MoveAnalyser::PsuedolegalMoves(const bool colour)
 {
-    std::map<Piece, PieceMovesByCat> all_moves;
+    std::map<Piece, Result> all_moves;
     
     for (Piece piece : this->m_pieces)
     {
-        Log(&piece);
-        PieceMovesByCat result = this->PiecePsuedolegalMoves(&piece);
+        // Skip if the piece is the wrong colour
+        if (piece.colour != colour) { continue; };
+        
+        // Analyse the results of our search
+        Result result = this->PiecePsuedolegalMoves(&piece);
         all_moves.insert({ piece, result});
     }
     return all_moves;
@@ -36,13 +38,12 @@ std::map<Piece, PieceMovesByCat> MoveAnalyser::PsuedolegalMoves()
 
 
 // Check all projections for a given piece
-PieceMovesByCat MoveAnalyser::PiecePsuedolegalMoves(const Piece* piece)
+Result MoveAnalyser::PiecePsuedolegalMoves(const Piece* piece)
 {
-    // Change this for an instance of PieceMovesByCat
-    PieceMovesByCat* piece_moves = new PieceMovesByCat;
+    // Change this for an instance of Result
+    Result* piece_moves = new Result;
     for (Vec projection : piece->projections)
     {
-        Log(&projection);
         this->ProjectionPsuedolegalMoves(piece, projection, piece_moves);
     };
     return *piece_moves;
@@ -52,7 +53,7 @@ PieceMovesByCat MoveAnalyser::PiecePsuedolegalMoves(const Piece* piece)
 void MoveAnalyser::ProjectionPsuedolegalMoves(
                                               const Piece* piece,
                                               const Vec projection,
-                                              PieceMovesByCat* piece_valid_moves)
+                                              Result* piece_valid_moves)
 {
     std::optional<Position> pinned = std::nullopt;
     
@@ -72,17 +73,11 @@ void MoveAnalyser::ProjectionPsuedolegalMoves(
         Allowedtype allowed = this->AllowedMove(&landed_on, piece);
         switch (allowed) {
             case AT_empty:
-                Log("Empty");
-                Log(&landed_on);
-                
                 _BREAK_ON_PIN;
                 if (piece->kind != 'p') {piece_valid_moves->attacks.push_back(landed_on);};
                 piece_valid_moves->passives.push_back(landed_on);
                 break;
             case AT_capture:
-                Log("Capture");
-                Log(&landed_on);
-                
                 _BREAK_ON_PIN;
                 piece_valid_moves->captures.push_back(landed_on);
                 piece_valid_moves->attacks.push_back(landed_on);
@@ -91,36 +86,25 @@ void MoveAnalyser::ProjectionPsuedolegalMoves(
                 pinned = Position(landed_on.i, landed_on.j);
                 break;
             case AT_attacks:
-                Log("Attack");
-                Log(&landed_on);
-                
                 _BREAK_ON_PIN;
                 // Do not continue looking
                 piece_valid_moves->attacks.push_back(landed_on);
                 quit = true;
                 break;
             case AT_checking_attack:
-                Log("Checking attack");
-                Log(&landed_on);
-                
                 if (pinned) { piece_valid_moves->pins.push_back(*pinned); }
                 else { piece_valid_moves->captures.push_back(landed_on); }
                 quit = true;
                 break;
             case AT_blocked:
-                Log("Blocked");
-                Log(&landed_on);
-                
                 quit = true;
                 _BREAK_ON_PIN;
                 
                 piece_valid_moves->defends.push_back(landed_on);
                 break;
             case AT_disallowed:
-                Log("Disallowed");
-                Log(&landed_on);
-                
                 quit = true;
+                break;
         };
     }
 };

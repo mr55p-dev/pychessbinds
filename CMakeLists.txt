@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
-set(PROJ pychessbinds)
-set(SRCS
-	${PROJ}/test.cpp 
+set(PROJ PyChessBinds)
+set(ALLSRCS
 	${PROJ}/log.cpp 
-	${PROJ}/test.hpp 
 	${PROJ}/log.hpp 
 	${PROJ}/piece.cpp 
 	${PROJ}/piece.hpp
@@ -13,10 +11,33 @@ set(SRCS
 	${PROJ}/move_analyser.cpp
 	${PROJ}/move_analyser.hpp
 )
+set(LIBSRCS
+	${PROJ}/bindings.cpp
+	${PROJ}/bindings.hpp
+    ${PROJ}/move_analyser.cpp
+    ${PROJ}/move_analyser.hpp
+	${PROJ}/piece.cpp 
+	${PROJ}/piece.hpp
+	${PROJ}/position.cpp
+	${PROJ}/position.hpp
+)
+set(TESTSRCS
+	${PROJ}/test.cpp
+	${PROJ}/test.hpp
+)
+set(CMAKE_CXX_STANDARD 17)
 
-project(${PROJ})
+project(${PROJ} LANGUAGES CXX)
 
 include_directories(${PROJ})
 
-add_executable(${PROJ} "${SRCS}") 
+add_executable(${PROJ} "${ALLSRCS}" "${TESTSRCS}")
 set_property(TARGET ${PROJ} PROPERTY CXX_STANDARD 17)
+
+# add_library(libpychess ${ALLSRCS})
+
+add_subdirectory(lib/pybind11)
+pybind11_add_module(libpychess MODULE ${LIBSRCS})
+
+# target_link_libraries(pychess libpychess)
+

@@ -18,10 +18,6 @@
 #include <vector>
 
 // Can be moved into header
-typedef std::map<MoveType, MoveSet > ResultSet;
-typedef std::map<Piece, Position> PieceMap;
-typedef std::map<Piece, MoveSet> MovesMap;
-
 // psuedolegal moves
 // psuedolegal move (by piece)
 // projections
@@ -55,6 +51,6 @@ int main()
     };
     
     MoveAnalyser move_analyser(piece_list);
-    std::map<Piece, PieceMovesByCat> moves =  move_analyser.PsuedolegalMoves();
+    std::map<Piece, Result> moves =  move_analyser.PsuedolegalMoves(C_WHITE);
     
 }
