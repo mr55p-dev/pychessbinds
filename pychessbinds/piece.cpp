@@ -50,7 +50,7 @@ Piece Piecedef::Bishop(bool colour, Position starting_position)
 Piece Piecedef::Knight(bool colour, Position starting_position)
 {
     const ProjectionSet proj(Piecedef::knight_projection_list, Piecedef::knight_projection_list + 8);
-    Piece knight(starting_position, 'n', colour, 1,proj);
+    Piece knight(starting_position, 'n', colour, 1, proj);
     return knight;
 }
 
@@ -59,7 +59,7 @@ Piece Piecedef::Pawn(bool colour, Position starting_position)
     if (colour)
     {
         ProjectionSet proj(Piecedef::pawn_projection_list_white, Piecedef::pawn_projection_list_white + 3);
-        Piece pawn(starting_position, 'p', colour, 1, proj);
+        Piece pawn(starting_position, 'p', colour, 2, proj);
         return pawn;
     } else
     {

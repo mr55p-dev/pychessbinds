@@ -42,15 +42,18 @@ int main()
 {
     // Define some pieces 
     PieceVec piece_list = {
-        Piecedef::Queen(C_WHITE, Position(3, 3)),
-        Piecedef::Queen(C_BLACK, Position(1, 4)),
-        Piecedef::King(C_WHITE, Position(7, 3)),
-        Piecedef::King(C_BLACK, Position(0, 3)),
-        Piecedef::Pawn(C_WHITE, Position(1, 4)),
-        Piecedef::Pawn(C_BLACK, Position(7, 4))
+        Piecedef::Pawn(C_BLACK, Position(6, 4)),
+        Piecedef::Pawn(C_WHITE, Position(1, 4))
     };
     
     MoveAnalyser move_analyser(piece_list);
     std::map<Piece, Result> moves =  move_analyser.PsuedolegalMoves(C_WHITE);
+    for (auto const& i : moves)
+    {
+        Log(&i.first);
+        Log(&i.first.projections);
+        MoveSet passives = i.second.passives;
+        Log(&passives);
+    }
     
 }
