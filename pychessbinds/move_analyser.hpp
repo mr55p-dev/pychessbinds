@@ -18,6 +18,8 @@
 #define C_WHITE 1
 #define C_BLACK 0
 
+typedef std::vector<Piece> PieceVec;
+
 enum Allowedtype
 {
     AT_empty,
@@ -28,17 +30,28 @@ enum Allowedtype
     AT_attacks
 };
 
-typedef std::vector<Piece> PieceVec;
-
-struct Result
+class ResultKeys
 {
-    MoveSet passives;
-    MoveSet captures;
-    MoveSet attacks;
-    MoveSet defends;
-    MoveSet pins;
+public:
+    // Copied out of python
+    static int passive;
+    static int capture;
+    static int attack;
+    static int defend;
+    static int pin;
 };
 
+
+//struct Result
+//{
+//    MoveSet passives;
+//    MoveSet captures;
+//    MoveSet attacks;
+//    MoveSet defends;
+//    MoveSet pins;
+//};
+
+typedef std::map<int, MoveSet> Result;
 
 class MoveAnalyser
 {

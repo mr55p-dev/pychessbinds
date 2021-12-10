@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/operators.h>
 #include <string>
 #include "move_analyser.hpp"
 #include "position.hpp"
@@ -36,13 +37,13 @@ PYBIND11_MODULE(libpychess, m) {
         .def_readonly("projections", &Piece::projections);
     
     // Define the wrapper for Result
-    py::class_<Result>(m, "Result")
-        .def(py::init<Result>())
-        .def_readonly("passives", &Result::passives)
-        .def_readonly("captures", &Result::captures)
-        .def_readonly("attacks", &Result::attacks)
-        .def_readonly("defends", &Result::defends)
-        .def_readonly("pins", &Result::pins);
+//    py::class_<Result>(m, "Result")
+//        .def(py::init<Result>())
+//        .def_readonly("passives", &Result::passives)
+//        .def_readonly("captures", &Result::captures)
+//        .def_readonly("attacks", &Result::attacks)
+//        .def_readonly("defends", &Result::defends)
+//        .def_readonly("pins", &Result::pins);
 
     // Define the vector and position class wrappers
     py::class_<Vec>(m, "Vector")
@@ -53,8 +54,16 @@ PYBIND11_MODULE(libpychess, m) {
     
     py::class_<Position>(m, "Position")
         .def(py::init<int, int>())
-        .def("__repr__", [](const Position& p){return "<Position " + std::to_string(p.i) + ", " + std::to_string(p.j) + ">";})
+        .def(py::init<std::tuple<int, int> >())
+        .def(py::init<const std::string>())
+        .def("__add__", &Position::operator+)
+        .def("__sub__", &Position::operator-)
+        .def("__eq__", &Position::operator==)
+        .def("__ne__", &Position::operator!=)
+        .def("__repr__", &Position::__repr__)
+        .def("__hash__", &Position::__hash__)
         .def("is_valid", &Position::is_valid)
+        .def("path_to", &Position::path_to)
         .def_readonly("i", &Position::i)
         .def_readonly("j", &Position::j);
     

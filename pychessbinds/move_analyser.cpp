@@ -6,7 +6,14 @@
 //
 
 #include "move_analyser.hpp"
+
 #define _BREAK_ON_PIN if (pinned) {break;};
+
+int ResultKeys::passive = 1;
+int ResultKeys::capture = 2;
+int ResultKeys::attack = 3;
+int ResultKeys::defend = 4;
+int ResultKeys::pin = 5;
 
 
 // Define the constructor
@@ -42,6 +49,12 @@ Result MoveAnalyser::PiecePsuedolegalMoves(const Piece* piece)
 {
     // Change this for an instance of Result
     Result* piece_moves = new Result;
+    (*piece_moves)[1] = MoveSet{};
+    (*piece_moves)[2] = MoveSet{};
+    (*piece_moves)[3] = MoveSet{};
+    (*piece_moves)[4] = MoveSet{};
+    (*piece_moves)[5] = MoveSet{};
+
     for (Vec projection : piece->projections)
     {
         this->ProjectionPsuedolegalMoves(piece, projection, piece_moves);
@@ -74,13 +87,13 @@ void MoveAnalyser::ProjectionPsuedolegalMoves(
         switch (allowed) {
             case AT_empty:
                 _BREAK_ON_PIN;
-                if (piece->kind != 'p') {piece_valid_moves->attacks.push_back(landed_on);};
-                piece_valid_moves->passives.push_back(landed_on);
+                if (piece->kind != 'p') {(*piece_valid_moves)[ResultKeys::attack].push_back(landed_on);};
+                (*piece_valid_moves)[ResultKeys::passive].push_back(landed_on);
                 break;
             case AT_capture:
                 _BREAK_ON_PIN;
-                piece_valid_moves->captures.push_back(landed_on);
-                piece_valid_moves->attacks.push_back(landed_on);
+                (*piece_valid_moves)[ResultKeys::capture].push_back(landed_on);
+                (*piece_valid_moves)[ResultKeys::attack].push_back(landed_on);
                 
                 // Set pinned to the landed on position
                 pinned = Position(landed_on.i, landed_on.j);
@@ -88,19 +101,19 @@ void MoveAnalyser::ProjectionPsuedolegalMoves(
             case AT_attacks:
                 _BREAK_ON_PIN;
                 // Do not continue looking
-                piece_valid_moves->attacks.push_back(landed_on);
+                (*piece_valid_moves)[ResultKeys::attack].push_back(landed_on);
                 quit = true;
                 break;
             case AT_checking_attack:
-                if (pinned) { piece_valid_moves->pins.push_back(*pinned); }
-                else { piece_valid_moves->captures.push_back(landed_on); }
+                if (pinned) { (*piece_valid_moves)[ResultKeys::pin].push_back(*pinned); }
+                else { (*piece_valid_moves)[ResultKeys::capture].push_back(landed_on); }
                 quit = true;
                 break;
             case AT_blocked:
                 quit = true;
                 _BREAK_ON_PIN;
                 
-                piece_valid_moves->defends.push_back(landed_on);
+                (*piece_valid_moves)[ResultKeys::defend].push_back(landed_on);
                 break;
             case AT_disallowed:
                 quit = true;

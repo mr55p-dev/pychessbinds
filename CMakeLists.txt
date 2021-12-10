@@ -31,13 +31,8 @@ project(${PROJ} LANGUAGES CXX)
 
 include_directories(${PROJ})
 
-add_executable(${PROJ} "${ALLSRCS}" "${TESTSRCS}")
-set_property(TARGET ${PROJ} PROPERTY CXX_STANDARD 17)
-
-# add_library(libpychess ${ALLSRCS})
-
 add_subdirectory(lib/pybind11)
 pybind11_add_module(libpychess MODULE ${LIBSRCS})
 
-# target_link_libraries(pychess libpychess)
-
+add_executable(${PROJ} "${ALLSRCS}" "${TESTSRCS}")
+set_property(TARGET ${PROJ} PROPERTY CXX_STANDARD 17)

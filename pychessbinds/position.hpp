@@ -1,4 +1,10 @@
 #pragma once
+#include <iostream>
+#include <tuple>
+#include <vector>
+#include <list>
+#include <math.h>
+
 
 // Vector struct
 class Vec
@@ -8,7 +14,7 @@ public:
     const int j;
     
 public:
-    Vec(const int start_i, const int start_j) : i(start_i), j(start_j) {};
+    Vec(const int init_i, const int init_j) : i(init_i), j(init_j) {};
     Vec operator*(int &scalar) const;
 };
 
@@ -21,14 +27,29 @@ public:
 
 public:
     bool is_valid();
+    std::vector<Position> path_to(Position& other);
     
 public:
-    Position(int init_i, int init_j);
-    Position& operator++();
+    // Define a construct for Position(i, j)
+    Position(const int init_i, const int init_j) : i(init_i), j(init_j) {};
+    // Define a constructir for Position((i, j)) (python support)
+    Position(const std::tuple<const int, const int> coords)
+        : i(std::get<0>(coords)), j(std::get<1>(coords)) {};
+    // Define a constructor for Position("E3")
+    Position(const std::string);
     bool operator==(const Position &other) const;
+    bool operator!=(const Position &other) const;
     bool operator<(const Position &rhs) const;
-    friend Position operator+(const Position &pos, Vec &vec);
-    friend Position operator+(Vec &vec, const Position &pos);
+    
+    Position operator+(const Vec &vec) const;
+    Position operator-(const Vec &vec) const;
+    
+    
+    int __hash__() const;
+    std::string __repr__() const;
+
+
+    
 
 };
 
