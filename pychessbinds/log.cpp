@@ -9,7 +9,7 @@ void Log(const char* message)
 
 void Log(const Piece* piece)
 {
-    std::cout << "<Piece '" << piece->kind << "' colour " << piece->colour << " at " << piece->position.i << ", " << piece->position.j << " with " << piece->projections.size() << " projections" << ">" << std::endl;
+    std::cout << "<Piece '" << piece->kind << "' colour " << piece->colour << " at " << piece->position.__repr__() << " with " << piece->projections.size() << " projections" << ">" << std::endl;
 }
 
 void Log(const Vec* vec)
@@ -19,7 +19,7 @@ void Log(const Vec* vec)
 
 void Log(const Position* pos)
 {
-    std::cout << "<Position " << pos->i << ", " << pos->j << ">" << std::endl;
+    std::cout << pos->__repr__() << std::endl;
 }
 
 void Log(const ProjectionSet* list)

@@ -7,7 +7,7 @@
 
 #include "move_analyser.hpp"
 
-#define _BREAK_ON_PIN if (pinned) {break;};
+#define _BREAK_ON_PIN if (pinned) { quit = true; break; };
 
 int ResultKeys::passive = 1;
 int ResultKeys::capture = 2;
@@ -105,7 +105,8 @@ void MoveAnalyser::ProjectionPsuedolegalMoves(
                 quit = true;
                 break;
             case AT_checking_attack:
-                if (pinned) { (*piece_valid_moves)[ResultKeys::pin].push_back(*pinned); }
+                if (pinned)
+                { (*piece_valid_moves)[ResultKeys::pin].push_back(*pinned); }
                 else { (*piece_valid_moves)[ResultKeys::capture].push_back(landed_on); }
                 quit = true;
                 break;
@@ -136,10 +137,20 @@ Allowedtype MoveAnalyser::AllowedMove(const Position* landed_on, const Piece* pi
         (piece->colour) ?
             start = 1 :
             start = 6;
-        if (piece->position.j - landed_on->j) { passive_allowed = false; }
-        else { capture_allowed = false; }
+        if (piece->position.j - landed_on->j)
+        {
+            passive_allowed = false;
+            
+        }
+        else
+        {
+            capture_allowed = false;
+            
+        }
         if (start - piece->position.i && abs(piece->position.j - landed_on->j) == 2)
-        { return AT_disallowed; };
+        {
+            return AT_disallowed;
+        };
     };
     
 
@@ -158,13 +169,17 @@ Allowedtype MoveAnalyser::AllowedMove(const Position* landed_on, const Piece* pi
         if (passive_allowed) { return AT_empty; }
         else if (capture_allowed) {return AT_attacks; }
         else { return AT_disallowed; };
-    } else if (occupier->colour == piece->colour && capture_allowed)
+    } else if (occupier->colour == piece->colour)
     {
-        return AT_blocked;
+        if (capture_allowed)
+        {
+            return AT_blocked;
+        }
     } else
     {
         if (capture_allowed && occupier->kind == 'k') { return AT_checking_attack; }
-        else if (capture_allowed) { return AT_capture; };
+        else if (capture_allowed)
+        { return AT_capture; };
     }
     return AT_disallowed;
 }

@@ -27,7 +27,7 @@ public:
 
 public:
     bool is_valid();
-    std::vector<Position> path_to(Position& other);
+    std::vector<Position> path_to(const Position& other) const;
     
 public:
     // Define a construct for Position(i, j)

@@ -41,19 +41,48 @@ namespace std
 int main()
 {
     // Define some pieces 
-    PieceVec piece_list = {
-        Piecedef::Pawn(C_BLACK, Position(6, 4)),
-        Piecedef::Pawn(C_WHITE, Position(1, 4))
-    };
+
+//    MoveAnalyser move_analyser(piece_list);
+//    std::map<Piece, Result> moves =  move_analyser.PsuedolegalMoves(C_BLACK);
+
     
-    MoveAnalyser move_analyser(piece_list);
-    std::map<Piece, Result> moves =  move_analyser.PsuedolegalMoves(C_WHITE);
+    Piece b_queen = Piecedef::Queen(C_BLACK, Position(2, 7));
+    Piece b_king = Piecedef::King(C_BLACK, Position(7, 7));
+    Piece b_pawn = Piecedef::Pawn(C_BLACK, Position(3, 7));
+    Piece w_rook = Piecedef::Rook(C_WHITE, Position(0, 7));
+    PieceVec p_list = {b_king, b_queen, b_pawn, w_rook};
+    
+    MoveAnalyser mal(p_list);
+    
+    std::map<Piece, Result> moves = mal.PsuedolegalMoves(C_WHITE);
+//    Result q_moves = moves[b_queen];
+//    MoveSet passives =
+//    Log(&q_moves);
+    std::cout << b_queen.position.i << std::endl;
     for (auto const& i : moves)
     {
         Log(&i.first);
-        Log(&i.first.projections);
-        MoveSet passives = i.second.passives;
+//        Log(&i.first.projections);
+        auto x = i.second;
+        MoveSet passives = x[1];
+        MoveSet captures = x[2];
+        MoveSet attack = x[3];
+        MoveSet defends = x[4];
+        MoveSet pins = x[5];
+        Log("Passives:");
         Log(&passives);
+
+        Log("Captures:");
+        Log(&captures);
+
+        Log("Attacks:");
+        Log(&attack);
+        
+        Log("Defends:");
+        Log(&defends);
+        
+        Log("Pins:");
+        Log(&pins);
     }
     
 }

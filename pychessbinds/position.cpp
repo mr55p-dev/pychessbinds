@@ -46,10 +46,10 @@ std::string Position::__repr__() const
 bool Position::is_valid()
 { return i > -1 && i < 8 && j > -1 && j < 8; };
 
-MoveSet Position::path_to(Position& other)
+MoveSet Position::path_to(const Position& other) const
 {
-    int di = other.i - this->i;
-    int dj = other.j - this->j;
+    signed int di = other.i - this->i;
+    signed int dj = other.j - this->j;
     int ai = abs(di);
     int aj = abs(dj);
     std::vector<Position> moves;
@@ -74,7 +74,7 @@ MoveSet Position::path_to(Position& other)
         // Iterate through all the pairs in the list and construct a position
         // from them
         for (auto tpl : ziplist)
-            { moves.push_back(Position(std::get<0>(tpl), std::get<1>(tpl))); }
+            { moves.push_back(Position(this->i + std::get<0>(tpl), this->j + std::get<1>(tpl))); }
     }
     else if (di == 0)
     {
