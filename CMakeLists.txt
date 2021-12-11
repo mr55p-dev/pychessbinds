@@ -25,9 +25,12 @@ set(TESTSRCS
 	${PROJ}/test.cpp
 	${PROJ}/test.hpp
 )
-set(CMAKE_CXX_STANDARD 17)
-
 project(${PROJ} LANGUAGES CXX)
+
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+
 
 include_directories(${PROJ})
 
