@@ -40,15 +40,6 @@ PYBIND11_MODULE(libpychess, m) {
         .def_readonly("distance",    &Piece::distance)
         .def_readonly("position",    &Piece::position)
         .def_readonly("projections", &Piece::projections);
-    
-    // Define the wrapper for Result
-//    py::class_<Result>(m, "Result")
-//        .def(py::init<Result>())
-//        .def_readonly("passives", &Result::passives)
-//        .def_readonly("captures", &Result::captures)
-//        .def_readonly("attacks", &Result::attacks)
-//        .def_readonly("defends", &Result::defends)
-//        .def_readonly("pins", &Result::pins);
 
     // Define the vector and position class wrappers
     py::class_<Vec>(m, "Vector")
