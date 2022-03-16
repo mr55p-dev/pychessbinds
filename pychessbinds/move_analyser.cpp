@@ -92,7 +92,7 @@ void MoveAnalyser::ProjectionPsuedolegalMoves(
         switch (allowed) {
             case AT_empty:
                 _BREAK_ON_PIN;
-                if (piece->kind != 'p') {(*piece_valid_moves)[ResultKeys::attack].push_back(landed_on);};
+                if (piece->kind != 'P') {(*piece_valid_moves)[ResultKeys::attack].push_back(landed_on);};
                 (*piece_valid_moves)[ResultKeys::passive].push_back(landed_on);
                 break;
             case AT_capture:
@@ -136,7 +136,7 @@ Allowedtype MoveAnalyser::AllowedMove(const Position* landed_on, const Piece* pi
     bool passive_allowed = true;
     
     // Setup pawn validation
-    if (piece->kind == 'p')
+    if (piece->kind == 'P')
     {
         int start;
         (piece->colour) ?
@@ -182,7 +182,7 @@ Allowedtype MoveAnalyser::AllowedMove(const Position* landed_on, const Piece* pi
         }
     } else
     {
-        if (capture_allowed && occupier->kind == 'k') { return AT_checking_attack; }
+        if (capture_allowed && occupier->kind == 'K') { return AT_checking_attack; }
         else if (capture_allowed)
         { return AT_capture; };
     }

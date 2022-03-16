@@ -22,39 +22,49 @@ Piece::Piece(
 bool Piece::operator< (const Piece& rhs) const
 { return true; };
 
+bool Piece::operator== (const Piece& rhs) const
+{
+    return this->hash() == rhs.hash();
+}
+
+int Piece::hash() const
+{
+    return 0 | this->position.i<<12 | this->position.j<<9 | this->kind<<2 | this->is_active<<1 | this->colour;
+}
+
 
 Piece Piecedef::King(bool colour, Position starting_position)
 {
     const ProjectionSet proj(Piecedef::all_projection_list, Piecedef::all_projection_list + 8);
-    Piece king(starting_position, 'k', colour, 1, proj);
+    Piece king(starting_position, 'K', colour, 1, proj);
     return king;
 }
 
 Piece Piecedef::Queen(bool colour, Position starting_position)
 {
     const ProjectionSet proj(Piecedef::all_projection_list, Piecedef::all_projection_list + 8);
-    Piece queen(starting_position, 'q', colour, 7, proj);
+    Piece queen(starting_position, 'Q', colour, 7, proj);
     return queen;
 }
 
 Piece Piecedef::Rook(bool colour, Position starting_position)
 {
     const ProjectionSet proj(Piecedef::rook_projection_list, Piecedef::rook_projection_list + 4);
-    Piece rook(starting_position, 'r', colour, 7, proj);
+    Piece rook(starting_position, 'R', colour, 7, proj);
     return rook;
 }
 
 Piece Piecedef::Bishop(bool colour, Position starting_position)
 {
     const ProjectionSet proj(Piecedef::bishop_projection_list, Piecedef::bishop_projection_list + 4);
-    Piece bishop(starting_position, 'b', colour, 7, proj);
+    Piece bishop(starting_position, 'B', colour, 7, proj);
     return bishop;
 }
 
 Piece Piecedef::Knight(bool colour, Position starting_position)
 {
     const ProjectionSet proj(Piecedef::knight_projection_list, Piecedef::knight_projection_list + 8);
-    Piece knight(starting_position, 'n', colour, 1, proj);
+    Piece knight(starting_position, 'N', colour, 1, proj);
     return knight;
 }
 
@@ -63,12 +73,12 @@ Piece Piecedef::Pawn(bool colour, Position starting_position)
     if (colour)
     {
         ProjectionSet proj(Piecedef::pawn_projection_list_white, Piecedef::pawn_projection_list_white + 3);
-        Piece pawn(starting_position, 'p', colour, 2, proj);
+        Piece pawn(starting_position, 'P', colour, 2, proj);
         return pawn;
     } else
     {
         ProjectionSet proj(Piecedef::pawn_projection_list_black, Piecedef::pawn_projection_list_black + 3);
-        Piece pawn(starting_position, 'p', colour, 2, proj);
+        Piece pawn(starting_position, 'P', colour, 2, proj);
         return pawn;
     };
 }
