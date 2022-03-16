@@ -35,6 +35,7 @@ PYBIND11_MODULE(libpychess, m) {
     py::class_<Piece>(m, "Piece")
         .def(py::init<Position, const char, const bool, int, const ProjectionSet>())
         .def("__repr__", [](const Piece& p){return "<Piece " + std::string{p.kind} + " colour: " + std::to_string(p.colour) + " at " + std::to_string(p.position.i) + ", " + std::to_string(p.position.j) + ">";})
+        .def_readwrite("is_active",   &Piece::is_active)
         .def_readonly("colour",      &Piece::colour)
         .def_readonly("kind",        &Piece::kind)
         .def_readonly("distance",    &Piece::distance)

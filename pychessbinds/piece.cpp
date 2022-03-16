@@ -1,11 +1,9 @@
-/* I, Ellis Lunnon, have read and understood the School's Academic Integrity Policy, as well as guidance relating to this  */
-/* module, and confirm that this submission complies with the policy. The content of this file is my own original work,  */
-/* with any significant material copied or adapted from other sources clearly indicated and attributed. */
-
-
 #include <iostream>
 #include "position.hpp"
 #include "piece.hpp"
+
+
+// NEED TO ADD THE IS_ACTIVE PROP TO THE PIECES!
 
 Piece::Piece(
              Position start_position,
@@ -18,7 +16,8 @@ Piece::Piece(
     kind(init_kind),
     colour(init_colour),
     projections(init_projections),
-    distance(init_distance) {};
+    distance(init_distance),
+    is_active(true) {};
 
 bool Piece::operator< (const Piece& rhs) const
 { return true; };
