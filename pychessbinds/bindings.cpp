@@ -24,12 +24,12 @@ PYBIND11_MODULE(libpychess, m) {
     
     // Define some high level piece constructors
     m.def_submodule("pieces")
-        .def("king",   &Piecedef::King,   py::return_value_policy::reference, "Return a new king")
-        .def("queen",  &Piecedef::Queen,  py::return_value_policy::reference, "Return a new queen")
-        .def("rook",   &Piecedef::Rook,   py::return_value_policy::reference, "Return a new rook")
-        .def("bishop", &Piecedef::Bishop, py::return_value_policy::reference, "Return a new bishop")
-        .def("knight", &Piecedef::Knight, py::return_value_policy::reference, "Return a new knight")
-        .def("pawn",   &Piecedef::Pawn,   py::return_value_policy::reference, "Return a new pawn");
+        .def("King",   &Piecedef::King,   py::return_value_policy::reference, "Return a new king")
+        .def("Queen",  &Piecedef::Queen,  py::return_value_policy::reference, "Return a new queen")
+        .def("Rook",   &Piecedef::Rook,   py::return_value_policy::reference, "Return a new rook")
+        .def("Bishop", &Piecedef::Bishop, py::return_value_policy::reference, "Return a new bishop")
+        .def("Knight", &Piecedef::Knight, py::return_value_policy::reference, "Return a new knight")
+        .def("Pawn",   &Piecedef::Pawn,   py::return_value_policy::reference, "Return a new pawn");
 
     // Define the piece class wrapper
     py::class_<Piece>(m, "Piece")
