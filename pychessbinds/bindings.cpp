@@ -45,9 +45,14 @@ PYBIND11_MODULE(libpychess, m) {
         .def_readonly("projections", &Piece::projections);
 
     // Define the vector and position class wrappers
-    py::class_<Vec>(m, "Vector")
+    py::class_<Vec>(m, "Vec")
         .def(py::init<const int, const int>())
         .def("__repr__", [](const Vec& v){return "<Vector " + std::to_string(v.i) + ", " + std::to_string(v.j) + ">";})
+        .def("__mul__", &Vec::operator*)
+        .def("__add__", &Vec::operator+)
+        .def("__sub__", &Vec::operator-)
+        .def("__eq__", &Vec::operator==)
+        .def("__ne__", &Vec::operator!=)
         .def_readonly("i", &Vec::i)
         .def_readonly("j", &Vec::j);
     

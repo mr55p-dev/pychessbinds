@@ -21,6 +21,11 @@ public:
 public:
     Vec(const int init_i, const int init_j) : i(init_i), j(init_j) {};
     Vec operator*(int &scalar) const;
+    bool operator==(const Vec &rhs) const;
+    bool operator!=(const Vec &rhs) const;
+    Vec operator+(const Vec &rhs) const;
+    Vec operator-(const Vec &rhs) const;
+    
 };
 
 // Position class

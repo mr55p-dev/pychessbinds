@@ -108,6 +108,17 @@ Vec operator*(Vec &vec, int &scalar)
 Vec operator*(int &scalar, Vec &vec)
 { return Vec(vec.i * scalar, vec.j * scalar); };
 
+bool Vec::operator==(const Vec &rhs) const
+{ return this->i == rhs.i && this->j == rhs.j; };
+
+bool Vec::operator!=(const Vec &rhs) const
+{ return this->i != rhs.i || this->j != rhs.j; };
+
+Vec Vec::operator+(const Vec &rhs) const
+{ return Vec(this->i + rhs.i, this->j + rhs.j); };
+
+Vec Vec::operator-(const Vec &rhs) const
+{ return Vec(this->i - rhs.i, this->j - rhs.j); };
 
 
 // HELPERS
