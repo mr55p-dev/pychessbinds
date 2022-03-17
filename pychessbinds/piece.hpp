@@ -20,9 +20,15 @@ public:
     const ProjectionSet projections;
     bool is_active;
 public:
-    Piece(Position start_position, const char init_kind, const bool init_colour, int distance, const ProjectionSet init_projections );
+    Piece(Position start_position,
+          const char init_kind,
+          const bool init_colour,
+          int distance,
+          const ProjectionSet init_projections
+    );
     bool operator<(const Piece& rhs) const;
     bool operator==(const Piece& rhs) const;
+    bool operator!=(const Piece& rhs) const;
     int hash() const;
 };
 

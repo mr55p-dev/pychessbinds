@@ -48,6 +48,11 @@ std::string Position::__repr__() const
     return s;
 }
 
+std::string Position::algebraic() const
+{
+    return this->__repr__();
+};
+
 bool Position::is_valid()
 { return i > -1 && i < 8 && j > -1 && j < 8; };
 

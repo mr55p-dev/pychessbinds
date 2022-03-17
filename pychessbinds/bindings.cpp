@@ -58,7 +58,6 @@ PYBIND11_MODULE(libpychess, m) {
     
     py::class_<Position>(m, "Position")
         .def(py::init<int, int>())
-        .def(py::init<std::tuple<int, int> >())
         .def(py::init<const std::string>())
         .def("__add__", &Position::operator+)
         .def("__sub__", &Position::operator-)
@@ -68,6 +67,7 @@ PYBIND11_MODULE(libpychess, m) {
         .def("__hash__", &Position::__hash__)
         .def("is_valid", &Position::is_valid)
         .def("path_to", &Position::path_to)
+        .def("algebraic", &Position::algebraic)
         .def_readonly("i", &Position::i)
         .def_readonly("j", &Position::j);
     

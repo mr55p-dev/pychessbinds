@@ -3,8 +3,6 @@
 #include "piece.hpp"
 
 
-// NEED TO ADD THE IS_ACTIVE PROP TO THE PIECES!
-
 Piece::Piece(
              Position start_position,
              const char init_kind,
@@ -26,6 +24,11 @@ bool Piece::operator== (const Piece& rhs) const
 {
     return this->hash() == rhs.hash();
 }
+
+bool Piece::operator!= (const Piece& rhs) const
+{
+    return this->hash() != rhs.hash();
+};
 
 int Piece::hash() const
 {

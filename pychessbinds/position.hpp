@@ -25,7 +25,6 @@ public:
     bool operator!=(const Vec &rhs) const;
     Vec operator+(const Vec &rhs) const;
     Vec operator-(const Vec &rhs) const;
-    
 };
 
 // Position class
@@ -42,9 +41,6 @@ public:
 public:
     // Define a construct for Position(i, j)
     Position(const int init_i, const int init_j) : i(init_i), j(init_j) {};
-    // Define a constructir for Position((i, j)) (python support)
-    Position(const std::tuple<const int, const int> coords)
-        : i(std::get<0>(coords)), j(std::get<1>(coords)) {};
     // Define a constructor for Position("E3")
     Position(const std::string);
     bool operator==(const Position &other) const;
@@ -57,10 +53,7 @@ public:
     
     int __hash__() const;
     std::string __repr__() const;
-
-
-    
-
+    std::string algebraic() const;
 };
 
 // Type definition
