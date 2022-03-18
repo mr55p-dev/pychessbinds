@@ -34,13 +34,6 @@ public:
 
 namespace Piecedef
 {
-    Piece King(bool colour, Position starting_position);
-    Piece Queen(bool colour, Position starting_position);
-    Piece Rook(bool colour, Position starting_position);
-    Piece Knight(bool colour, Position starting_position);
-    Piece Bishop(bool colour, Position starting_position);
-    Piece Pawn(bool colour, Position starting_position);
-    
     const Vec all_projection_list[8] = {
         Vec(1, 1),
         Vec(1, 0),
@@ -88,5 +81,23 @@ namespace Piecedef
         Vec(-1, -1),
         Vec(-1, 1)
     };
+
+
+    // Define a constant for the default value of the BasePiece constructing function
+    const ProjectionSet all_projections(Piecedef::all_projection_list, Piecedef::all_projection_list + 8);
+
+    Piece BasePiece(
+                    const bool colour,
+                    const Position starting_position,
+                    const char kind,
+                    int max_distance = 7,
+                    const ProjectionSet projections = all_projections,
+                    bool is_active = false);
+    Piece King(bool colour, Position starting_position);
+    Piece Queen(bool colour, Position starting_position);
+    Piece Rook(bool colour, Position starting_position);
+    Piece Knight(bool colour, Position starting_position);
+    Piece Bishop(bool colour, Position starting_position);
+    Piece Pawn(bool colour, Position starting_position);
 
 };

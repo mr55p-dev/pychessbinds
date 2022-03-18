@@ -35,6 +35,17 @@ int Piece::hash() const
     return 0 | this->position.i<<12 | this->position.j<<9 | this->kind<<2 | this->is_active<<1 | this->colour;
 }
 
+Piece BasePiece(
+                const bool colour,
+                const Position starting_position,
+                const char kind,
+                int max_distance,
+                const ProjectionSet projections,
+                bool is_active)
+{
+    Piece piece(starting_position, kind, colour, max_distance, projections);
+    return piece;}
+
 
 Piece Piecedef::King(bool colour, Position starting_position)
 {

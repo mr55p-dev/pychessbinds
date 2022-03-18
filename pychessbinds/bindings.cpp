@@ -24,6 +24,7 @@ PYBIND11_MODULE(libpychess, m) {
     
     // Define some high level piece constructors
     m.def_submodule("pieces")
+        .def("Piece",  &Piecedef::BasePiece, py::return_value_policy::reference, "Return a new Piece")
         .def("King",   &Piecedef::King,   py::return_value_policy::reference, "Return a new king")
         .def("Queen",  &Piecedef::Queen,  py::return_value_policy::reference, "Return a new queen")
         .def("Rook",   &Piecedef::Rook,   py::return_value_policy::reference, "Return a new rook")
