@@ -1,8 +1,3 @@
-/* I, Ellis Lunnon, have read and understood the School's Academic Integrity Policy, as well as guidance relating to this  */
-/* module, and confirm that this submission complies with the policy. The content of this file is my own original work,  */
-/* with any significant material copied or adapted from other sources clearly indicated and attributed. */
-
-
 //
 //  move_analyser.cpp
 //  pychessbinds
@@ -22,7 +17,8 @@ int ResultKeys::pin = 5;
 
 
 // Define the constructor
-MoveAnalyser::MoveAnalyser(const PieceVec& pieces) : m_pieces(pieces)
+MoveAnalyser::MoveAnalyser(const PieceVec& pieces, const std::optional<Position> ep_square)
+    : m_pieces(pieces), m_ep_square(ep_square)
 {
     for (auto piece : pieces)
     {
@@ -121,6 +117,12 @@ void MoveAnalyser::ProjectionPsuedolegalMoves(
                 
                 (*piece_valid_moves)[ResultKeys::defend].push_back(landed_on);
                 break;
+            case AT_enpassant:
+                quit = true;
+                _BREAK_ON_PIN;
+                
+                (*piece_valid_moves)[ResultKeys::capture].push_back(landed_on);
+                break;
             case AT_disallowed:
                 quit = true;
                 break;
@@ -145,12 +147,10 @@ Allowedtype MoveAnalyser::AllowedMove(const Position* landed_on, const Piece* pi
         if (piece->position.j - landed_on->j)
         {
             passive_allowed = false;
-            
         }
         else
         {
             capture_allowed = false;
-            
         }
         if (start - piece->position.i && abs(piece->position.j - landed_on->j) == 2)
         {
@@ -172,7 +172,9 @@ Allowedtype MoveAnalyser::AllowedMove(const Position* landed_on, const Piece* pi
     {
         // Not occupied
         if (passive_allowed) { return AT_empty; }
-        else if (capture_allowed) {return AT_attacks; }
+        else if (capture_allowed) { return AT_attacks; }
+        // Check if the piece is a pawn, and if m_ep_square is set
+        else if (piece->kind == 'P' && *landed_on == m_ep_square) { return AT_enpassant; }
         else { return AT_disallowed; };
     } else if (occupier->colour == piece->colour)
     {

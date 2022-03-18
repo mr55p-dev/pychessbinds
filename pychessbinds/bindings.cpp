@@ -73,6 +73,6 @@ PYBIND11_MODULE(libpychess, m) {
     
     // Define the MoveAnalyser wrapper (using pybind stl conversions)
     py::class_<MoveAnalyser>(m, "MoveAnalyser")
-        .def(py::init<const PieceVec&>())
+        .def(py::init<const PieceVec&, const Position&>())
         .def("PsuedolegalMoves", &MoveAnalyser::PsuedolegalMoves);
 };

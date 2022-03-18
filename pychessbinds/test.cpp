@@ -57,7 +57,7 @@ int main()
     Piece w_rook = Piecedef::Rook(C_WHITE, Position(0, 7));
     PieceVec p_list = {b_king, b_queen, b_pawn, w_rook};
     
-    MoveAnalyser mal(p_list);
+    MoveAnalyser mal(p_list, std::nullopt);
     
     std::map<Piece, Result> moves = mal.PsuedolegalMoves(C_WHITE);
 //    Result q_moves = moves[b_queen];

@@ -32,7 +32,8 @@ enum Allowedtype
     AT_checking_attack,
     AT_capture,
     AT_disallowed,
-    AT_attacks
+    AT_attacks,
+    AT_enpassant
 };
 
 class ResultKeys
@@ -47,21 +48,12 @@ public:
 };
 
 
-//struct Result
-//{
-//    MoveSet passives;
-//    MoveSet captures;
-//    MoveSet attacks;
-//    MoveSet defends;
-//    MoveSet pins;
-//};
-
 typedef std::map<int, MoveSet> Result;
 
 class MoveAnalyser
 {
 public:
-    MoveAnalyser(const PieceVec& pieces);
+    MoveAnalyser(const PieceVec& pieces, const std::optional<Position> ep_square = std::nullopt);
     
 public:
     std::map<Piece, Result> PsuedolegalMoves(const bool colour);
@@ -70,6 +62,7 @@ public:
 private:
     PieceVec m_pieces;
     MoveSet m_piece_locations;
+    const std::optional<Position> m_ep_square;
     Result PiecePsuedolegalMoves(const Piece* piece);
     void ProjectionPsuedolegalMoves(const Piece* piece, const Vec projection, Result* piece_valid_moves);
     
