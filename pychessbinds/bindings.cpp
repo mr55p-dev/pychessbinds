@@ -1,8 +1,3 @@
-/* I, Ellis Lunnon, have read and understood the School's Academic Integrity Policy, as well as guidance relating to this  */
-/* module, and confirm that this submission complies with the policy. The content of this file is my own original work,  */
-/* with any significant material copied or adapted from other sources clearly indicated and attributed. */
-
-
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
@@ -24,7 +19,14 @@ PYBIND11_MODULE(libpychess, m) {
     
     // Define some high level piece constructors
     m.def_submodule("pieces")
-        .def("Piece",  &Piecedef::BasePiece, py::return_value_policy::reference, "Return a new Piece")
+        .def("Piece",  &Piecedef::BasePiece,             
+             py::arg("colour"),
+             py::arg("starting_position"),
+             py::arg("kind"),
+             py::arg("max_distance") = 7,
+             py::arg("projections") = std::nullopt,
+             py::arg("is_active") = true,             
+             py::return_value_policy::reference, "Return a new Piece")
         .def("King",   &Piecedef::King,   py::return_value_policy::reference, "Return a new king")
         .def("Queen",  &Piecedef::Queen,  py::return_value_policy::reference, "Return a new queen")
         .def("Rook",   &Piecedef::Rook,   py::return_value_policy::reference, "Return a new rook")

@@ -6,6 +6,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <optional>
 #include "position.hpp"
 
 typedef std::vector<Vec> ProjectionSet;
@@ -84,15 +85,15 @@ namespace Piecedef
 
 
     // Define a constant for the default value of the BasePiece constructing function
-    const ProjectionSet all_projections(Piecedef::all_projection_list, Piecedef::all_projection_list + 8);
+    
 
     Piece BasePiece(
                     const bool colour,
                     const Position starting_position,
                     const char kind,
                     int max_distance = 7,
-                    const ProjectionSet projections = all_projections,
-                    bool is_active = false);
+                    std::optional<ProjectionSet> projections = *new ProjectionSet(Piecedef::all_projection_list, Piecedef::all_projection_list + 8),
+                    bool is_active = true);
     Piece King(bool colour, Position starting_position);
     Piece Queen(bool colour, Position starting_position);
     Piece Rook(bool colour, Position starting_position);

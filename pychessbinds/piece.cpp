@@ -35,15 +35,17 @@ int Piece::hash() const
     return 0 | this->position.i<<12 | this->position.j<<9 | this->kind<<2 | this->is_active<<1 | this->colour;
 }
 
-Piece BasePiece(
+Piece Piecedef::BasePiece(
                 const bool colour,
                 const Position starting_position,
                 const char kind,
                 int max_distance,
-                const ProjectionSet projections,
+                std::optional<ProjectionSet> projections,
                 bool is_active)
 {
-    Piece piece(starting_position, kind, colour, max_distance, projections);
+    ProjectionSet allproj(Piecedef::all_projection_list, Piecedef::all_projection_list + 8);
+    ProjectionSet pr = projections.value_or(allproj);
+    Piece piece(starting_position, kind, colour, max_distance, pr);
     return piece;}
 
 
